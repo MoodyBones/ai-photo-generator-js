@@ -3,17 +3,17 @@ dotenv.config(); // access to .env variables
 
 import { Configuration, OpenAIApi } from 'openai';
 
-const config = new Configuration({
+const configuration = new Configuration({
   apiKey: process.env.OPENAI,
 });
 
-const openai = new OpenAIApi(config);
+const openai = new OpenAIApi(configuration);
 
 // use express to run middleware on every request
 import express from 'express';
+// bring in security mechanism, CORS | Cross Origin Resource Sharing
 import cors from 'cors';
 
-// bring in security mechanism, CORS | Cross Origin Resource Sharing
 const app = express();
 app.use(cors());
 app.use(express.json); // only want incoming data in in json format
