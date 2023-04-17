@@ -19,16 +19,25 @@ app.use(cors());
 app.use(express.json); // only want incoming data in in json format
 
 app.post('/dream', async (req, res) => {
-  const prompt = req.body.prompt;
+  try {
+    const prompt = req.body.prompt;
 
-  const aiResponse = await openai.createImage({
-    prompt,
-    n: 1,
-    size: '1024x1024',
-  });
+    const aiResponse = await openai.createImage({
+      prompt,
+      n: 1,
+      size: '1024x1024',
+    });
 
-  const image = aiResponse.data.data[0].url;
-  res.send({ image });
+    const image = aiResponse.data.data[0].url;
+    res.send({ image });
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.status);
+      console.log(error.response.data);
+    } else {
+      console.log(error.message);
+    }
+  }
 });
 
 app.listen(8080, () => console.log('make art on http://localhost:8080/dream'));
