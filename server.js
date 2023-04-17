@@ -31,12 +31,10 @@ app.post('/dream', async (req, res) => {
     const image = aiResponse.data.data[0].url;
     res.send({ image });
   } catch (error) {
-    if (error.response) {
-      console.log(error.response.status);
-      console.log(error.response.data);
-    } else {
-      console.log(error.message);
-    }
+    console.error(error);
+    res
+      .status(500)
+      .send(error?.response.data.error.message || 'Something went wrong');
   }
 });
 
